@@ -5,22 +5,21 @@
 import unittest
 import urllib
 
+from flask import Flask
 from flask_testing import LiveServerTestCase
 from selenium import webdriver
 
 class TestBase(LiveServerTestCase):
-  """
+
   def create_app(self):
-    config_name = 'testing'
-    app = create_app(config_name)
-    app.config.update(
-      # Specify the test database
-      SQLALCHEMY_DATABASE_URI='',
-      # Change the port that the liveserver listens on
-      LIVESERVER_PORT=8943
-    )
-    return app
-  """
+      app = Flask(__name__)
+      app.config['TESTING'] = True
+      # Default port is 5000
+      app.config['LIVESERVER_PORT'] = 8943
+      # Default timeout is 5 seconds
+      app.config['LIVESERVER_TIMEOUT'] = 10
+      return app
+
   def setUp(self):
     self.driver = webdriver.Chrome()
 
