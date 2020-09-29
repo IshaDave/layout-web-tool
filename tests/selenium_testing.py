@@ -1,5 +1,5 @@
 """
-  Setting up Functional testing for layout web tool.
+  Setting up functional testing for layout web tool.
 """
 
 import unittest
@@ -23,7 +23,7 @@ class TestBase(LiveServerTestCase):
   def setUp(self):
     self.driver = webdriver.Chrome()
 
-  def test_Start(self):
+  def test_start(self):
     driver = self.driver
     driver.get('https://in-toto.engineering.nyu.edu/')
 
