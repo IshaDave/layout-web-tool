@@ -4,6 +4,7 @@
 
 import unittest
 import urllib
+import filecmp
 
 from flask import Flask
 from flask_testing import LiveServerTestCase
@@ -31,6 +32,23 @@ class TestBase(LiveServerTestCase):
     start.click()
 
     self.driver.quit()
+
+  def test_screenshots_diff(self):
+      driver = self.driver
+      driver.get('https://in-toto.engineering.nyu.edu/')
+
+      driver.save_screenshot('ss_before.png')
+
+      start = driver.find_element_by_xpath('/html/body/div[3]/div/div/a')
+      start.click()
+      previous = driver.find_element_by_xpath('/html/body/div[3]/div[4]/div[1]/a')
+      previous.click()
+
+      driver.save_screenshot('ss_after.png')
+
+      comp = filecmp.cmp('ss_before.png', 'ss_after.png', shallow=False)
+      return(comp)
+      driver.quit()
 
 if __name__ == '__main__':
     unittest.main()
